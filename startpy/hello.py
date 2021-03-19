@@ -13,23 +13,30 @@ import json
 
 apiURL = "https://opendata.datainfogreffe.fr/api/records/1.0/search/?dataset=chiffres-cles-2020&q=&sort=ca_1&facet=denomination&facet=libelle_ape&facet=code_postal&facet=ville&facet=departement&facet=region&facet=greffe&facet=tranche_ca_millesime_1&facet=tranche_ca_millesime_2&facet=tranche_ca_millesime_3"
 
-#responseTest = requests.get("http://api.open-notify.org/astros.json")
-# print(response.json())
-# print(response.status_code)
+# def jprint(obj):
+#     # create a formatted string of the Python JSON object
+#     text = json.dumps(obj, sort_keys=False, indent=4)
+#     print(text)
 
-def jprint(obj):
-    # create a formatted string of the Python JSON object
-    text = json.dumps(obj, sort_keys=False, indent=4)
-    print(text)
+# respone = requests.get(apiURL)
+# if (respone.status_code != 200):
+#     print("status code : {}".format(respone.status_code))
 
-respone = requests.get(apiURL)
-jsonData = respone.json()
-result = []
-print("number of record: {}".format(len(jsonData['records'])))
-for item in jsonData['records']:
-    result.append(item['fields']['siren'])
-print(result)
+# jsonData = respone.json()
+# result = []
+# print("number of record: {}".format(len(jsonData['records'])))
+# for item in jsonData['records']:
+#     result.append(item['fields']['siren'])
+# print(result)
 
-#print(respone.json())
-#jprint(responseTest.json())
-#jprint(respone.json())
+def connectAPI(baseURL):
+    respone = requests.get(baseURL)
+    if respone.status_code != 200:
+        return None
+    return respone
+
+
+if connectAPI(apiURL) != None:
+    x = connectAPI(apiURL).json()
+    print(x)
+
