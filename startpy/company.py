@@ -5,6 +5,12 @@ apiGetDatasets = "https://opendata.datainfogreffe.fr/api/datasets/1.0/search"
 apiGetDatasetsByPar = "https://opendata.datainfogreffe.fr/api/datasets/1.0/search/?q=&rows={}"
 apiGetRecord = "https://opendata.datainfogreffe.fr/api/records/1.0/search/?dataset={}&q=siren%3D{}&facet=denomination&facet=libelle_ape&facet=code_postal&facet=ville&facet=departement&facet=region&facet=greffe&facet=tranche_ca_millesime_1&facet=tranche_ca_millesime_2&facet=tranche_ca_millesime_3"
 
+class Company:
+    def __init__(self, siren, name, data):
+        self.name = siren
+        self.name = name
+        self.data = data
+
 def jprint(obj):
     # create a formatted string of the Python JSON object
     text = json.dumps(obj, sort_keys=False, indent=4)
@@ -23,8 +29,8 @@ noOfDatasets = responeDatasets['nhits'] if responeDatasets != None else 10
 
 # get datasets with row = par
 responeDatasets = contentFromAPI(apiGetDatasetsByPar.format(noOfDatasets))
-
 datasets = responeDatasets['datasets'] if responeDatasets != None else []
+
 for dtset in datasets:
     datasetid = dtset['datasetid']
     
@@ -46,4 +52,6 @@ for dtset in datasets:
         print(name)
         jprint(responeData)
         break
+    else:
+        print("siren not found")
 
