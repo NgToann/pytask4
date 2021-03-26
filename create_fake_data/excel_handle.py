@@ -1,5 +1,6 @@
 # xlrd 1.2.0 support xlsx
 import xlrd
+import xlwt
 import json
 
 # print dữ liệu theo định dạng json cho dễ nhìn
@@ -65,5 +66,33 @@ for key in key_unique_new:
 # sắp xếp theo key
 results = sorted(results, key=lambda k: k.get('key', 0), reverse = False)
 jprint(results)
+
+for r in results:
+    print(r)
+
+
+# tao ham export
+def export_excel (data):
+    try:
+        book = xlwt.Workbook()
+        sh = book.add_sheet('sheet 1')
+        
+        sh.write(0, 0, 'Clash')
+        sh.write(0, 1, 'Qty Match')
+        
+        i = 1
+        for r in data:
+            sh.write(i, 0, r['key'])
+            sh.write(i, 1, r['qtyMatch'])
+            i = i + 1
+        book.save('excel_output/' + 'result.xls')
+        return True
+    except:
+        return False
+
+if export_excel(results) == False:
+    print('##### Export Failed ######')    
+else:
+    print('##### Export excel Successful ######')
 
     
