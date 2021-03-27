@@ -7,36 +7,39 @@ import json
 def jprint(obj):
     text = json.dumps(obj, sort_keys=False, indent=4)
     print(text)
-
+    
+print('##### Reading Excel File ######')
 # duong dan cua file excel
-loc = ('excel_input/' + 'bben.xlsx')
-wb = xlrd.open_workbook(loc)
-sheet = wb.sheet_by_index(0)
-total_row = sheet.nrows
-
-# đọc data từ file excel
 data_from_excel = []
-for i in range(1, total_row):
-    cell_col_1 = sheet.cell_value(i, 0)
-    # dòng nào có giá trị = '' thì bỏ qua
-    if cell_col_1 == '':
-        continue
-
-    cell_col_2 = sheet.cell_value(i, 1)
-    cell_col_3 = sheet.cell_value(i, 2)
-    # name 1 = A, name2 = B ==> tạo ra 1 cái key = AB và keySwap = BA để lọc dữ liệu cho dễ
-    row = { 'key' : '{}{}'.format(cell_col_1, cell_col_2),
-            'keySwap' : '{}{}'.format(cell_col_2, cell_col_1),            
-            'name1':'{}'.format(cell_col_1), 
-            'name2':'{}'.format(cell_col_2),
-            'qty':cell_col_3}
-    data_from_excel.append(row)
+try:
+    loc = ('excel_input/' + 'bben.xlsx')
+    wb = xlrd.open_workbook(loc)
+    sheet = wb.sheet_by_index(0)
+    total_row = sheet.nrows
+    # đọc data từ file excel
+    for i in range(1, total_row):
+        cell_col_1 = sheet.cell_value(i, 0)
+        # dòng nào có giá trị = '' thì bỏ qua
+        if cell_col_1 == '':
+            continue
+        cell_col_2 = sheet.cell_value(i, 1)
+        cell_col_3 = sheet.cell_value(i, 2)
+        # name 1 = A, name2 = B ==> tạo ra 1 cái key = AB và keySwap = BA để lọc dữ liệu cho dễ
+        row = { 'key' : '{}{}'.format(cell_col_1, cell_col_2),
+                'keySwap' : '{}{}'.format(cell_col_2, cell_col_1),            
+                'name1':'{}'.format(cell_col_1), 
+                'name2':'{}'.format(cell_col_2),
+                'qty':cell_col_3}
+        data_from_excel.append(row)
+except:
+    print('##### Cant Read Excel File ######')
 
 # list key
 keys_unique = set(item['key'] for item in data_from_excel)
 # list swap key
 keys_swap_unique = set(item['keySwap'] for item in data_from_excel)
 
+print('##### Select data ######')
 #đếm data
 data_list = []
 for key in keys_unique:
@@ -65,11 +68,8 @@ for key in key_unique_new:
 
 # sắp xếp theo key
 results = sorted(results, key=lambda k: k.get('key', 0), reverse = False)
+print('##### Json Result ######')
 jprint(results)
-
-for r in results:
-    print(r)
-
 
 # tao ham export
 def export_excel (data):
@@ -91,8 +91,10 @@ def export_excel (data):
         return False
 
 if export_excel(results) == False:
-    print('##### Export Failed ######')    
+    print('##### Export Failed ######')
 else:
-    print('##### Export excel Successful ######')
+    print('##### Export Excel Successful ######')
+    
+input('Press ENTER to exit !')
 
     
