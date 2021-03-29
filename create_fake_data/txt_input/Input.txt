@@ -1,0 +1,38 @@
+
+Clashes
+------------------
+Report Batch
+
+Item 1
+Path:	C111
+
+Item 2
+Path:	FB 19T100
+
+Item 1
+Path:	C111
+
+Item 2
+Path:	FB 19T100
+
+Item 1
+Path:	C121
+
+Item 2
+Path:	Type B_FB 16T150
+Item 1
+Path:	AQC
+Item 2
+Path:	XZS
+
+Item 1
+Path:	T7M
+Item 2
+Path:	POP
+
+Item 1
+Path:	POP
+
+Item 2
+Path:	T7M
+
